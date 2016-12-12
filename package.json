@@ -1,7 +1,6 @@
 {
   "name": "webpack_start_point",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "dependencies": {
     "express": "^4.13.4"
@@ -12,5 +11,14 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swern/StatusPage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/swern/StatusPage/issues"
+  },
+  "homepage": "https://github.com/swern/StatusPage#readme",
+  "description": ""
 }
