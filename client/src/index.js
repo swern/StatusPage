@@ -1,9 +1,18 @@
+var Buckstream = require('./models/buckstream.js');
 var Event = require('./models/event.js');
 var Status = require('./models/status.js');
-var Stream = require('./models/stream.js');
 var View = require('./view/view.js');
 
 window.onload = function(){
+	var Buckstream = new Buckstream();
+	var view = new View(buckstream);
+
+	buckstream.onFetchSuccess = function(){
+		view.render()
+	}
+
+	buckstream.fetchEvents();
+
   console.log("webpack app started");
 
 
@@ -14,10 +23,10 @@ window.onload = function(){
       title: document.querySelector("#title").value,
       status: document.querySelector("#status").value
     }
-    console.log('test', test)
+    console.log('Event Data', eventData)
     var newEvent = new Event(eventData)
-    Stream.addEvent(newEvent);
-    View.render();
+    Buckstream.addEvent(newEvent);
+    view.render();
     newEvent.save();
 
   }

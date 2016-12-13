@@ -44,12 +44,21 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Event = __webpack_require__(1);
-	var Status = __webpack_require__(2);
-	var Stream = __webpack_require__(3);
+	var Buckstream = __webpack_require__(5);
+	var Event = __webpack_require__(2);
+	var Status = __webpack_require__(3);
 	var View = __webpack_require__(4);
 	
 	window.onload = function(){
+		var Buckstream = new Buckstream();
+		var view = new View(buckstream);
+	
+		buckstream.onFetchSuccess = function(){
+			view.render()
+		}
+	
+		buckstream.fetchEvents();
+	
 	  console.log("webpack app started");
 	
 	
@@ -60,10 +69,10 @@
 	      title: document.querySelector("#title").value,
 	      status: document.querySelector("#status").value
 	    }
-	    console.log('test', test)
+	    console.log('Event Data', eventData)
 	    var newEvent = new Event(eventData)
-	    Stream.addEvent(newEvent);
-	    View.render();
+	    Buckstream.addEvent(newEvent);
+	    view.render();
 	    newEvent.save();
 	
 	  }
@@ -73,7 +82,8 @@
 
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ function(module, exports) {
 
 	function Event(title, status){
@@ -84,6 +94,19 @@
 	}
 	
 	Event.prototype = {
+		save: function(){
+	    var url = 'http://localhost:3000/accounts';
+	    var request = new XMLHttpRequest();
+	    request.open("POST", url);
+	    request.setRequestHeader("Content-Type", "application/json");
+	    request.onload = function(){
+	      if(request.status === 200){
+	      }
+	    }
+	    request.send(JSON.stringify(this));
+	  },
+	
+	
 		getTitle: function(){
 			return this.title;
 		},
@@ -100,7 +123,7 @@
 	module.exports = Event;
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	function Status(name, colour, resolved){
@@ -134,25 +157,20 @@
 	module.exports = Status;
 
 /***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-
-
-/***/ },
 /* 4 */
 /***/ function(module, exports) {
 
-	var View = function(stream){
-		this.stream = stream;
+	var View = function(buckstream){
+		this.buckstream = buckstream;
 	}
 	
 	View.prototype = {
+		
 		render: function(){
 		
 			var eventList = document.getElementById('event-list');
 	
-			this.populateEventList(eventList)
+			this.populateEventList(eventList, this.buckstream.events)
 		},
 	
 	
@@ -163,7 +181,7 @@
 		},
 	
 		populateEventList: function(listElement, events){
-			for (event of events){
+			for(event of events){
 				listElement.appendChild(this.createItemForEvent(event));
 			}
 		}
@@ -178,6 +196,56 @@
 	
 	
 	module.exports = View;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Event = __webpack_require__(2);
+	
+	function Buckstream(){
+	
+		this.events = [];
+	 this.onFetchSuccess = null;
+	
+	}
+	
+	Buckstream.prototype = {
+		addEvent: function(event){
+			this.events.push(event);
+		},
+	
+		findEventsByTitle: function(title){
+			var foundEvent = null;
+			for (event of this.events) {
+				if(event.title === title){
+					foundEvent = event;
+				}
+			}
+			return foundEvent;
+		},
+	
+		fetchEvents:function(){
+			var url = 'http://localhost:3000/test';
+			var request = new XMLHttpRequest();
+	    request.open("GET", url);
+	    request.onload = function(){
+	      if(request.status === 200){
+	        var sampleEvents = JSON.parse(request.responseText)
+	        for(event of sampleEvents){
+	          this.addEvent(new Event(event));
+	        }
+	        this.onFetchSuccess();
+	      }
+	    }.bind(this);
+	    request.send(null);
+	
+		}
+	}
+	
+	
+	
+	module.exports = Buckstream;
 
 /***/ }
 /******/ ]);
