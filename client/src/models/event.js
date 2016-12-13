@@ -1,3 +1,5 @@
+var status = require('../status');
+
 var Event = function(title, status, content, schedule, lastUpdated, comments){
 
 	this.title = title;
