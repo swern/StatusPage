@@ -30,6 +30,7 @@
 
 var Event = function(params){
 	this.title = params.title;
+	this.description = params.description;
 	this.status = params.status;
 };
 

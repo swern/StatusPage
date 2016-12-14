@@ -50,7 +50,7 @@
 	
 	var createItemForEvent = function(event){
 	  var eventListItem = document.createElement('li');
-	  eventListItem.innerText = event.title + event.status;
+	  eventListItem.innerText = "Title: " + event.title + " " + "Description: " +event.description + " Status: " + event.status ;
 	    return eventListItem;
 	}
 	
@@ -98,7 +98,9 @@
 	    e.preventDefault();
 	    var event = {
 	      title: document.querySelector("#title").value,
+	      description: document.querySelector("#description").value,
 	      status: document.querySelector("#status").value
+	
 	    }
 	    buckstream.addEvent(new Event(event));
 	    displayBuckstream(buckstream);
@@ -198,6 +200,7 @@
 	
 	var Event = function(params){
 		this.title = params.title;
+		this.description = params.description;
 		this.status = params.status;
 	};
 	

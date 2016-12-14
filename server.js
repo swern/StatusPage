@@ -35,6 +35,7 @@ app.post('/test', function(req,res){
     var collection = db.collection('test');
     collection.insert(
       { "title": req.body.title,
+        "description": req.body.description,
         "status": req.body.status
       }
     )

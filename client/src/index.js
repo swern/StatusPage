@@ -4,7 +4,7 @@ var url = 'http://localhost:3000/test';
 
 var createItemForEvent = function(event){
   var eventListItem = document.createElement('li');
-  eventListItem.innerText = event.title + event.status;
+  eventListItem.innerText = "Title: " + event.title + " " + "Description: " +event.description + " Status: " + event.status ;
     return eventListItem;
 }
 
@@ -52,7 +52,9 @@ var request = new XMLHttpRequest();
     e.preventDefault();
     var event = {
       title: document.querySelector("#title").value,
+      description: document.querySelector("#description").value,
       status: document.querySelector("#status").value
+
     }
     buckstream.addEvent(new Event(event));
     displayBuckstream(buckstream);
