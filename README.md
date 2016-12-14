@@ -1,6 +1,10 @@
 # StatusPage
 JS status page
 
+The status page allows a user to see events with their title, description, and urgency on a one page app, which also has the option to add new events into the list. 
+
+Events are currently displayed by when they were added to the list.
+
 ##MongoDB
 Create a DB in Mongodb and add in some sample data to the style of ({title: "title1", description: "description", status: "status"}).
 
