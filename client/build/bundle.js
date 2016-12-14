@@ -50,7 +50,8 @@
 	
 	var createItemForEvent = function(event){
 	  var eventListItem = document.createElement('li');
-	  eventListItem.innerText = "Title: " + event.title + " " + "Description: " +event.description + " Status: " + event.status ;
+	  var removeItem = document.getElementById('remove')
+	  eventListItem.innerText = "Title: " + event.title + " " + "Description: " +event.description + " Status: " + event.status + removeItem ;
 	    return eventListItem;
 	}
 	
