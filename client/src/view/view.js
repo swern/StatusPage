@@ -1,36 +1,36 @@
-var View = function(buckstream){
-	this.buckstream = buckstream;
-}
+// var View = function(buckstream){
+// 	this.buckstream = buckstream;
+// }
 
-View.prototype = {
+// View.prototype = {
 	
-	render: function(){
+// 	render: function(){
 	
-		var eventList = document.getElementById('event-list');
+// 		var eventList = document.getElementById('event-list');
 
-		this.populateEventList(eventList, this.buckstream.events)
-	},
-
-
-	createItemForEvent:function(event){
-		var eventListItem = document.createElement('li');
-		eventListItem.innerText = event.title + event.status;
-		return eventListItem;
-	},
-
-	populateEventList: function(listElement, events){
-		for(event of events){
-			listElement.appendChild(this.createItemForEvent(event));
-		}
-	}
+// 		this.populateEventList(eventList, this.buckstream.events)
+// 	},
 
 
-}
+// 	createItemForEvent:function(event){
+// 		var eventListItem = document.createElement('li');
+// 		eventListItem.innerText = event.title + event.status;
+// 		return eventListItem;
+// 	},
+
+// 	populateEventList: function(listElement, events){
+// 		for(event of events){
+// 			listElement.appendChild(this.createItemForEvent(event));
+// 		}
+// 	}
 
 
+// }
 
 
 
 
 
-module.exports = View;
+
+
+// module.exports = View;

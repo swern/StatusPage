@@ -46,18 +46,47 @@
 
 	var Buckstream = __webpack_require__(1);
 	var Event = __webpack_require__(2);
-	var Status = __webpack_require__(3);
-	var View = __webpack_require__(4);
+	var url = 'http://localhost:3000/test';
+	
+	var createItemForEvent = function(event){
+	  var eventListItem = document.createElement('li');
+	  eventListItem.innerText = event.title + event.status;
+	    return eventListItem;
+	}
+	
+	  var populateEventList = function(listElement, events){
+	    for(event of events){
+	      listElement.appendChild(createItemForEvent(event));
+	    }
+	  }
+	
+	  var displayBuckstream = function(buckstream){
+	
+	  var eventList = document.getElementById('event-list');
+	  populateEventList(eventList, buckstream.events)
+	}
+	
 	
 	window.onload = function(){
-		var Buckstream = new Buckstream(events, null);
-		var view = new View(buckstream);
+		var buckstream = new Buckstream();
+		
 	
-		buckstream.onFetchSuccess = function(){
-			view.render()
-		}
+	var request = new XMLHttpRequest();
+	  request.open("GET", url);
+	  request.onload = function(){
+	    if(request.status === 200){
+	      console.log('got the data');
+	      console.log(request.responseText);
+	      var sampleEvents = JSON.parse(request.responseText)
+	      for(event of sampleEvents){
+	        buckstream.addEvent(new Event(event));
+	      }
+	      displayBuckstream(buckstream)
+	    }
+	  }
+	  request.send(null);
 	
-		buckstream.fetchEvents();
+	
 	
 	  console.log("webpack app started");
 	
@@ -65,32 +94,48 @@
 	  var form = document.querySelector("#add-event")
 	   form.onsubmit = function(e){
 	    e.preventDefault();
-	    var eventData = {
+	    var event = {
 	      title: document.querySelector("#title").value,
 	      status: document.querySelector("#status").value
 	    }
-	    console.log('Event Data', eventData)
-	    var newEvent = new Event(eventData)
-	    Buckstream.addEvent(newEvent);
-	    view.render();
-	    newEvent.save();
+	    buckstream.addEvent(new Event(event));
+	    displayBuckstream(buckstream);
 	
+	    var request = new XMLHttpRequest();
+	    request.open("POST", url);
+	    request.setRequestHeader("Content-Type", "application/json");
+	    request.onload = function(){
+	      if(request.status === 200){
+	      }
+	    }
+	    request.send(JSON.stringify(event));
 	  }
-	
-	
 	};
+	
+	
+	
+	
+	
+	//     console.log('Event Data', eventData)
+	//     var newEvent = new Event(eventData)
+	//     Buckstream.addEvent(newEvent);
+	//     view.render();
+	//     newEvent.save();
+	
+	//   }
+	
+	
+	// };
 
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	var Event = __webpack_require__(2);
 	
-	var Buckstream = function(events, onFetchSuccess){
+	var Buckstream = function(){
 	
 		this.events = [];
-	 	this.onFetchSuccess = null;
 	
 	}
 	
@@ -109,22 +154,6 @@
 			return foundEvent;
 		},
 	
-		fetchEvents:function(){
-			var url = 'http://localhost:3000/test';
-			var request = new XMLHttpRequest();
-	    request.open("GET", url);
-	    request.onload = function(){
-	      if(request.status === 200){
-	        var sampleEvents = JSON.parse(request.responseText)
-	        for(event of sampleEvents){
-	          this.addEvent(new Event(event));
-	        }
-	        this.onFetchSuccess();
-	      }
-	    }.bind(this);
-	    request.send(null);
-	
-		}
 	}
 	
 	
@@ -170,85 +199,6 @@
 	
 	
 	module.exports = Event;
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	function Status(name, colour, resolved){
-	
-		this.name = name;
-		this.colour = colour;
-		this.resolved = resolved;
-	
-	}
-	
-	
-	Status.prototype = {
-		getName: function(){
-			return this.name;
-		},
-	
-		getColour: function(){
-			return this.colour;
-		},
-	
-		getResolved: function(){
-			return this.resolved;
-		}
-	
-	
-	}
-	
-	
-	
-	
-	module.exports = Status;
-	
-	
-	
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-	var View = function(buckstream){
-		this.buckstream = buckstream;
-	}
-	
-	View.prototype = {
-		
-		render: function(){
-		
-			var eventList = document.getElementById('event-list');
-	
-			this.populateEventList(eventList, this.buckstream.events)
-		},
-	
-	
-		createItemForEvent:function(event){
-			var eventListItem = document.createElement('li');
-			eventListItem.innerText = event.title + event.status;
-			return eventListItem;
-		},
-	
-		populateEventList: function(listElement, events){
-			for(event of events){
-				listElement.appendChild(this.createItemForEvent(event));
-			}
-		}
-	
-	
-	}
-	
-	
-	
-	
-	
-	
-	
-	module.exports = View;
 
 /***/ }
 /******/ ]);
