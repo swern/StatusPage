@@ -1,6 +1,6 @@
 var Buckstream = require('./models/buckstream.js');
 var Event = require('./models/event.js');
-var url = 'http://localhost:3000/test';
+var url = 'http://localhost:3000/events';
 
 var createItemForEvent = function(event){
   var eventListItem = document.createElement('li');
@@ -17,6 +17,9 @@ var createItemForEvent = function(event){
   var displayBuckstream = function(buckstream){
 
   var eventList = document.getElementById('event-list');
+
+  eventList.innerHTML = ""
+
   populateEventList(eventList, buckstream.events)
 }
 

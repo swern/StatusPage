@@ -11,17 +11,17 @@ app.use(bodyParser.urlencoded({extended: true}));
 var MongoClient = require('mongodb').MongoClient
 
 // Connection URL
-var url = 'mongodb://localhost:27017/test1';
+var url = 'mongodb://localhost:27017/events';
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
-app.get('/test', function(req,res){
+app.get('/events', function(req,res){
 
   // Connection URL
   MongoClient.connect(url, function(err, db) {
-    var collection = db.collection('test');
+    var collection = db.collection('events');
     collection.find({}).toArray(function(err, docs) {
       res.json(docs);
       db.close();
@@ -29,10 +29,10 @@ app.get('/test', function(req,res){
   });
 })
 
-app.post('/test', function(req,res){
+app.post('/events', function(req,res){
   console.log('body', req.body)
   MongoClient.connect(url, function(err, db) {
-    var collection = db.collection('test');
+    var collection = db.collection('events');
     collection.insert(
       { "title": req.body.title,
         "description": req.body.description,

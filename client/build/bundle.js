@@ -46,7 +46,7 @@
 
 	var Buckstream = __webpack_require__(1);
 	var Event = __webpack_require__(2);
-	var url = 'http://localhost:3000/test';
+	var url = 'http://localhost:3000/events';
 	
 	var createItemForEvent = function(event){
 	  var eventListItem = document.createElement('li');
@@ -63,6 +63,9 @@
 	  var displayBuckstream = function(buckstream){
 	
 	  var eventList = document.getElementById('event-list');
+	
+	  eventList.innerHTML = ""
+	
 	  populateEventList(eventList, buckstream.events)
 	}
 	
