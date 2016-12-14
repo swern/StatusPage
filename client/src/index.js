@@ -32,9 +32,11 @@ var request = new XMLHttpRequest();
       console.log('got the data');
       console.log(request.responseText);
       var sampleEvents = JSON.parse(request.responseText)
+      console.log(sampleEvents)
       for(event of sampleEvents){
         buckstream.addEvent(new Event(event));
       }
+      console.log(buckstream)
       displayBuckstream(buckstream)
     }
   }
