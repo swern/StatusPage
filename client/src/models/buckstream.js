@@ -1,9 +1,9 @@
 var Event = require('./event.js');
 
-function Buckstream(){
+var Buckstream = function(events, onFetchSuccess){
 
 	this.events = [];
- this.onFetchSuccess = null;
+ 	this.onFetchSuccess = null;
 
 }
 

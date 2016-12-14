@@ -4,7 +4,7 @@ var Status = require('./models/status.js');
 var View = require('./view/view.js');
 
 window.onload = function(){
-	var Buckstream = new Buckstream();
+	var Buckstream = new Buckstream(events, null);
 	var view = new View(buckstream);
 
 	buckstream.onFetchSuccess = function(){

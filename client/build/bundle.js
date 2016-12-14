@@ -44,13 +44,13 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Buckstream = __webpack_require__(5);
+	var Buckstream = __webpack_require__(1);
 	var Event = __webpack_require__(2);
 	var Status = __webpack_require__(3);
 	var View = __webpack_require__(4);
 	
 	window.onload = function(){
-		var Buckstream = new Buckstream();
+		var Buckstream = new Buckstream(events, null);
 		var view = new View(buckstream);
 	
 		buckstream.onFetchSuccess = function(){
@@ -82,7 +82,56 @@
 
 
 /***/ },
-/* 1 */,
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Event = __webpack_require__(2);
+	
+	var Buckstream = function(events, onFetchSuccess){
+	
+		this.events = [];
+	 	this.onFetchSuccess = null;
+	
+	}
+	
+	Buckstream.prototype = {
+		addEvent: function(event){
+			this.events.push(event);
+		},
+	
+		findEventsByTitle: function(title){
+			var foundEvent = null;
+			for (event of this.events) {
+				if(event.title === title){
+					foundEvent = event;
+				}
+			}
+			return foundEvent;
+		},
+	
+		fetchEvents:function(){
+			var url = 'http://localhost:3000/test';
+			var request = new XMLHttpRequest();
+	    request.open("GET", url);
+	    request.onload = function(){
+	      if(request.status === 200){
+	        var sampleEvents = JSON.parse(request.responseText)
+	        for(event of sampleEvents){
+	          this.addEvent(new Event(event));
+	        }
+	        this.onFetchSuccess();
+	      }
+	    }.bind(this);
+	    request.send(null);
+	
+		}
+	}
+	
+	
+	
+	module.exports = Buckstream;
+
+/***/ },
 /* 2 */
 /***/ function(module, exports) {
 
@@ -155,6 +204,10 @@
 	
 	
 	module.exports = Status;
+	
+	
+	
+
 
 /***/ },
 /* 4 */
@@ -196,56 +249,6 @@
 	
 	
 	module.exports = View;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Event = __webpack_require__(2);
-	
-	function Buckstream(){
-	
-		this.events = [];
-	 this.onFetchSuccess = null;
-	
-	}
-	
-	Buckstream.prototype = {
-		addEvent: function(event){
-			this.events.push(event);
-		},
-	
-		findEventsByTitle: function(title){
-			var foundEvent = null;
-			for (event of this.events) {
-				if(event.title === title){
-					foundEvent = event;
-				}
-			}
-			return foundEvent;
-		},
-	
-		fetchEvents:function(){
-			var url = 'http://localhost:3000/test';
-			var request = new XMLHttpRequest();
-	    request.open("GET", url);
-	    request.onload = function(){
-	      if(request.status === 200){
-	        var sampleEvents = JSON.parse(request.responseText)
-	        for(event of sampleEvents){
-	          this.addEvent(new Event(event));
-	        }
-	        this.onFetchSuccess();
-	      }
-	    }.bind(this);
-	    request.send(null);
-	
-		}
-	}
-	
-	
-	
-	module.exports = Buckstream;
 
 /***/ }
 /******/ ]);
