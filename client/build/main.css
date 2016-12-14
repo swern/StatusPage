@@ -12,7 +12,59 @@ body{
   text-align: center;
 }
 
-button{
+h1 {
+  background-color: tomato;
+   border: 1px solid #30A9DE;
+   border-radius: 5px;
+  font-family: 'Nunito', sans-serif;
+  color: white;
+}
+
+h2 {
+background-color: tomato;
+   border: 1px solid #30A9DE;
+   border-radius: 5px;
+  font-family: 'Nunito', sans-serif;
+  color: white;
+}
+
+h3 {
+background-color: tomato;
+   border: 1px solid #30A9DE;
+   border-radius: 5px;
+  font-family: 'Nunito', sans-serif;
+  color: white;
+}
+
+input[type=text] {
+    border: 2px solid #EFDC05;
+    border-radius: 4px;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+}
+
+#button {
+   background-color: #E53A40;
+   border: 2px solid #30A9DE;
+   border-radius: 5px;
+   color: white;
+   padding: 10px 30px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 15px;
+   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+   width: 100%;
+   font-family: 'Nunito', sans-serif;
+}
+
+#button:hover {
+    background-color: #EFDC05;
+    color: white;
+    cursor: pointer;
+}
+
+/*button{
   padding: 10px;
   width: 150px;
   border-radius: 10px;
@@ -22,4 +74,4 @@ button{
 
 button:hover{
   background-color: mediumaquamarine;
-}  
+}  */
