@@ -36,7 +36,7 @@ var request = new XMLHttpRequest();
       for(event of sampleEvents){
         buckstream.addEvent(new Event(event));
       }
-      console.log(buckstream)
+      console.log(buckstream.events)
       displayBuckstream(buckstream)
     }
   }
